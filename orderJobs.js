@@ -19,9 +19,6 @@ const orderJobs = (jobDependencies) => {
     })
 
     console.log('formattedJobDependenciesArray: ', formattedJobDependenciesArray)
-    // const formattedJobDependencies = jobDependencies.replace(/(=>|\s)/g, '') // regex to remove any => and whitespace
-    // console.log('formattedJobDependencies: ', formattedJobDependencies)
-
     
     const finalJobSequenceArray = []
     formattedJobDependenciesArray.forEach(jobDependency => {
