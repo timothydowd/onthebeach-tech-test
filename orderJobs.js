@@ -2,7 +2,7 @@ const orderJobs = (jobDependencies) => {
     if(jobDependencies === '') {
         return ''
     }
-    
+
     console.log('jobDependencies: ', jobDependencies)
     const formattedJobDependenciesArray = jobDependencies.split(',').map(jobDependency => {  // splits jobDependencies into an array then maps
         return jobDependency.replace(/(=>|\s)/g, '')  // regex to remove any => and whitespace
@@ -20,7 +20,7 @@ const orderJobs = (jobDependencies) => {
             
             const priorityJob = jobDependency[1] // allocates priority job to const
             const nonPriorityJob = jobDependency[0] // and similar for non prioity job
-
+            
             if(!jobSequenceArray.includes(priorityJob) && !jobSequenceArray.includes(nonPriorityJob)){ //if job sequence array that we are adding to 
                                                                                                            // doesn't contain the priority or non priority job
                 jobSequenceArray.unshift(nonPriorityJob) // unshifts job pair to front of array
@@ -29,8 +29,9 @@ const orderJobs = (jobDependencies) => {
             } else if(jobSequenceArray.includes(priorityJob) && !jobSequenceArray.includes(nonPriorityJob)) { // if job sequence contains the priority job only
                 jobSequenceArray.splice(jobSequenceArray.indexOf(priorityJob) + 1, 0, nonPriorityJob) // find the index of it and add the non priority job after it
                 
-            } else if(jobSequenceArray.includes(nonPriorityJob && !jobSequenceArray.includes(priorityJob))) { // if job sequence contains the non priority job only
+            } else if(jobSequenceArray.includes(nonPriorityJob) && !jobSequenceArray.includes(priorityJob)) { // if job sequence contains the non priority job only
                 jobSequenceArray.splice(jobSequenceArray.indexOf(nonPriorityJob), 0, priorityJob) // find the index of it and add the priority job before it
+
             } 
         }
     })
@@ -42,8 +43,6 @@ const orderJobs = (jobDependencies) => {
 
     console.log('finaljobSequenceArray: ', finalJobSequenceArray.join(''))
     return finalJobSequenceArray.join('')
-    
-
     
 }
 
