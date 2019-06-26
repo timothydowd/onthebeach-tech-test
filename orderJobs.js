@@ -14,18 +14,31 @@
 
 const orderJobs = (jobDependencies) => {
     console.log('jobDependencies: ', jobDependencies)
-    const formattedJobDependencies = jobDependencies.replace(/(=>|\s)/g, '') // regex to remove any => and whitespace
-    console.log('formattedJobDependencies: ', formattedJobDependencies)
+    const formattedJobDependenciesArray = jobDependencies.split(',').map(jobDependency => {  // splits jobDependencies into an array then maps
+        return jobDependency.replace(/(=>|\s)/g, '')  // regex to remove any => and whitespace
+    })
+
+    console.log('formattedJobDependenciesArray: ', formattedJobDependenciesArray)
+    // const formattedJobDependencies = jobDependencies.replace(/(=>|\s)/g, '') // regex to remove any => and whitespace
+    // console.log('formattedJobDependencies: ', formattedJobDependencies)
 
     
+    const finalJobSequenceArray = []
+    formattedJobDependenciesArray.forEach(jobDependency => {
+        if(jobDependency.length > 1){ // if job has a dependency i.e 'a => b' instead of 'a =>'
+            const prioritisedJobPair = jobDependency.slice(-1) + jobDependency.slice(0,1) // reorders that pair of jobs and returns them
+            console.log('prioritisedJobPair: ', prioritisedJobPair)
+            finalJobSequenceArray.push(prioritisedJobPair)
+            
+        } else { // else it just returns the single job
+            finalJobSequenceArray.push(jobDependency)
+            
+        }
 
-    if(formattedJobDependencies.length > 1){ // if job has a dependency i.e 'a => b' instead of 'a =>'
-        const prioritisedJobPair = formattedJobDependencies.slice(-1) + formattedJobDependencies.slice(0,1) // reorders that pair of jobs and returns them
-        console.log('prioritisedJobPair: ', prioritisedJobPair)
-        return prioritisedJobPair
-    } else { // else it just returns the single job
-        return formattedJobDependencies
-    }
+    })
+    console.log('finalJobSequenceArray: ', finalJobSequenceArray.join(''))
+    return finalJobSequenceArray.join('')
+    
 
     
 }

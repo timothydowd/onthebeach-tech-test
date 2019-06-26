@@ -12,7 +12,7 @@ describe('orderJobs', () => {
     it('when passed 2 jobs, where a depends on b ("a => b"), returns the string "ba"', () => {
         expect(orderJobs('a => b')).to.eql('ba')
     });
-    it.only('when passed 2 jobs with no dependencies, "a =>, b=>", returns the a and b in no particular order', () => {
+    it('when passed 2 jobs with no dependencies, "a =>, b=>", returns the a and b in no particular order', () => {
         expect(orderJobs('a =>, b =>')).to.include('a','b')
         expect(orderJobs('a =>, b =>')).to.have.lengthOf(2)
         
