@@ -14,9 +14,20 @@
 
 const orderJobs = (jobDependencies) => {
 
+    const formattedJobDependencies = jobDependencies.replace(/(=>|\s)/g, '') // regex to remove any => and whitespace
+    console.log('formattedJobDependencies: ', formattedJobDependencies)
 
+    
 
-    return jobDependencies.replace(/(=>|\s)/g, '') // regex to remove any => and whitespace
+    if(formattedJobDependencies.length > 1){ // if job has a dependency i.e 'a => b' instead of 'a =>'
+        const prioritisedJobPair = formattedJobDependencies.slice(-1) + formattedJobDependencies.slice(0,1) // reorders that pair of jobs and returns them
+        console.log(prioritisedJobPair)
+        return prioritisedJobPair
+    } else { // else it just returns the single job
+        return formattedJobDependencies
+    }
+
+    
 }
 
 
