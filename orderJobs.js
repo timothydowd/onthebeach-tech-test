@@ -13,7 +13,10 @@
 
 
 const orderJobs = (jobDependencies) => {
-    return jobDependencies
+
+
+
+    return jobDependencies.replace(/(=>|\s)/g, '') // regex to remove any => and whitespace
 }
 
 
