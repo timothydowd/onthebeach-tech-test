@@ -1,18 +1,8 @@
-// The purpose of this exercise is to see how you approach a problem, and how you solve it. We’re interested to see how you structure
-// your Ruby code, your command of the language and good design and testing principles, bear this in mind throughout.
-// HINT: Start with a method that accepts a single string argument and returns a string (or a collection) which represents the ordered
-// sequence of jobs (since each job is a single character).
-// HINT: Brownie points will be given for showing us your working (notes, commit history, some kind of idea how you approached the
-// problem).
-// HINT: We’re pretty keen on tested code.
-// Have Fun.
-
-// Imagine we have a list of jobs, each represented by a character. Because certain jobs must be done before others, a job may have a
-// dependency on another job. For example, a may depend on b, meaning the final sequence of jobs should place b before a. If a has no
-// dependency, the position of a in the final sequence does not matter.
-
-
 const orderJobs = (jobDependencies) => {
+    if(jobDependencies === '') {
+        return ''
+    }
+    
     console.log('jobDependencies: ', jobDependencies)
     const formattedJobDependenciesArray = jobDependencies.split(',').map(jobDependency => {  // splits jobDependencies into an array then maps
         return jobDependency.replace(/(=>|\s)/g, '')  // regex to remove any => and whitespace
@@ -20,20 +10,37 @@ const orderJobs = (jobDependencies) => {
 
     console.log('formattedJobDependenciesArray: ', formattedJobDependenciesArray)
     
-    const finalJobSequenceArray = []
+    const nonPriorityJobs = []
+    const jobSequenceArray = []
     formattedJobDependenciesArray.forEach(jobDependency => {
-        if(jobDependency.length > 1){ // if job has a dependency i.e 'a => b' instead of 'a =>'
-            const prioritisedJobPair = jobDependency.slice(-1) + jobDependency.slice(0,1) // reorders that pair of jobs and returns them
-            console.log('prioritisedJobPair: ', prioritisedJobPair)
-            finalJobSequenceArray.push(prioritisedJobPair)
+        if(jobDependency.length === 1){ // if job has no dependency
+            nonPriorityJobs.push(jobDependency) //pushes to non prioritised jobs to be added at the end
+            console.log('nonPriorityJobs: ', nonPriorityJobs)
+        } else { // else if job has a dependency
             
-        } else { // else it just returns the single job
-            finalJobSequenceArray.push(jobDependency)
-            
-        }
+            const priorityJob = jobDependency[1] // allocates priority job to const
+            const nonPriorityJob = jobDependency[0] // and similar for non prioity job
 
+            if(!jobSequenceArray.includes(priorityJob) && !jobSequenceArray.includes(nonPriorityJob)){ //if job sequence array that we are adding to 
+                                                                                                           // doesn't contain the priority or non priority job
+                jobSequenceArray.unshift(nonPriorityJob) // unshifts job pair to front of array
+                jobSequenceArray.unshift(priorityJob)
+
+            } else if(jobSequenceArray.includes(priorityJob) && !jobSequenceArray.includes(nonPriorityJob)) { // if job sequence contains the priority job only
+                jobSequenceArray.splice(jobSequenceArray.indexOf(priorityJob) + 1, 0, nonPriorityJob) // find the index of it and add the non priority job after it
+                
+            } else if(jobSequenceArray.includes(nonPriorityJob && !jobSequenceArray.includes(priorityJob))) { // if job sequence contains the non priority job only
+                jobSequenceArray.splice(jobSequenceArray.indexOf(nonPriorityJob), 0, priorityJob) // find the index of it and add the priority job before it
+            } 
+        }
     })
-    console.log('finalJobSequenceArray: ', finalJobSequenceArray.join(''))
+    console.log('jobSequenceArray: ', jobSequenceArray)
+
+    const finalJobSequenceArray = nonPriorityJobs.reduce((finalJobSequence, nonPriorityJob) => { //takes nonpriority jobs and combines them with the rest of the job sequence if not already allocated
+        return finalJobSequence.includes(nonPriorityJob) ? finalJobSequence : [...finalJobSequence, nonPriorityJob]
+    },jobSequenceArray)
+
+    console.log('finaljobSequenceArray: ', finalJobSequenceArray.join(''))
     return finalJobSequenceArray.join('')
     
 

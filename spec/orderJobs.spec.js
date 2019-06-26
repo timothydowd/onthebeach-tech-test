@@ -16,11 +16,19 @@ describe('orderJobs', () => {
         expect(orderJobs('a =>, b =>')).to.include('a','b')
         expect(orderJobs('a =>, b =>')).to.have.lengthOf(2)
     });
-    it.only('when passed 3 jobs, where a depends on b and c ("a => b, c =>") has no dependency, returns b before a and c anywhere', () => {
+    it('when passed 3 jobs, where a depends on b and c ("a => b, c =>") has no dependency, returns b before a and c anywhere', () => {
         expect(orderJobs('a => b, c')).to.include('a','b','c')
         const indexA = orderJobs('a => b, c').indexOf('a')
         const indexB = orderJobs('a => b, c').indexOf('b')
 
         assert.operator(indexA, '>', indexB)
+    });
+    it('(a => b, c => b), returns b before a and b before c', () => {
+        expect(orderJobs('a => b, c => b')).to.have.lengthOf(3)
+        const indexA = orderJobs('a => b, c => b').indexOf('a')
+        const indexB = orderJobs('a => b, c => b').indexOf('b')
+        const indexC = orderJobs('a => b, c => b').indexOf('c')
+        assert.operator(indexA, '>', indexB)
+        assert.operator(indexC, '>', indexB)
     });
 });
