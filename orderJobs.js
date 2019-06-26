@@ -9,6 +9,8 @@ const orderJobs = (jobDependencies) => {
     })
 
     console.log('formattedJobDependenciesArray: ', formattedJobDependenciesArray)
+
+    
     
     // const nonPriorityJobs = []
     // const jobSequenceArray = []
@@ -50,7 +52,10 @@ const orderJobs = (jobDependencies) => {
             const priorityJob = jobDependency[1] // allocates priority job to const
             const nonPriorityJob = jobDependency[0] // and similar for non prioity job
 
-            if(!jobSequence.includes(priorityJob) && !jobSequence.includes(nonPriorityJob)){ //if job sequence array that we are adding to 
+            if(priorityJob === nonPriorityJob){ // if jobs are the same i.e. self dependent
+                return [...jobSequence, 'sdError'] // adds error into sequence to be picked up later whhen out of reduce
+
+            } else if(!jobSequence.includes(priorityJob) && !jobSequence.includes(nonPriorityJob)){ //if job sequence array that we are adding to 
                 // doesn't contain the priority or non priority job
                 return [priorityJob, nonPriorityJob, ...jobSequence]  // adds job pair to front of array
             } else if(jobSequence.includes(priorityJob) && !jobSequence.includes(nonPriorityJob)) { // if job sequence contains the priority job only
@@ -69,6 +74,10 @@ const orderJobs = (jobDependencies) => {
         }
 
     },[])
+
+    if(jobSequenceArray.includes('sdError')){
+        return 'Error: Jobs cannot depend on themselves'
+    }
 
 
     console.log('jobSequenceArray: ', jobSequenceArray)

@@ -57,4 +57,9 @@ describe('orderJobs', () => {
         assert.operator(indexA, '<', indexD)
         assert.operator(indexB, '<', indexE)
     });
+    it('(a => a),returns self dependency error', () => {
+        expect(orderJobs('a => a')).to.eql('Error: Jobs cannot depend on themselves')
+
+    });
+
 });
