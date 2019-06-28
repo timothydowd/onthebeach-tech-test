@@ -70,6 +70,18 @@ describe('orderJobs', () => {
         assert.throws(() => orderJobs('a => b, b => c, c => a'), Error, "Jobs cannot have circular dependencies");
     });
 
+    it('when passed (a => b, b => c, a => c), returns a string with b before a, c before b and c before a', () => {
+        expect(orderJobs('a => b, b => c, a => c')).to.have.lengthOf(3)
+
+        const indexA = orderJobs('a => b, b => c, a => c').indexOf('a')
+        const indexB = orderJobs('a => b, b => c, a => c').indexOf('b')
+        const indexC = orderJobs('a => b, b => c, a => c').indexOf('c')
+        
+        assert.operator(indexA, '>', indexB)
+        assert.operator(indexB, '>', indexC)
+        assert.operator(indexA, '>', indexC)
+    });
+
 
     // it('(a => b, c => d, d => a),returns string with b before a, d before c and a before d', () => {
         
