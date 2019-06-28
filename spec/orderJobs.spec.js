@@ -57,18 +57,15 @@ describe('orderJobs', () => {
         assert.operator(indexA, '<', indexD)
         assert.operator(indexB, '<', indexE)
     });
-    it.only('(a => a), throws the error: "Jobs cannot depend on themselves"', () => {
+    it('(a => a), throws the error: "Jobs cannot depend on themselves"', () => {
         assert.throws(() => orderJobs('a => a'), Error, "Jobs cannot depend on themselves");
     });
-    // it('(c => d, a => b, a => a),returns self dependency error', () => {
-    //     expect(orderJobs('c => d, a => b, a => a')).to.throw(new Error('Jobs cannot depend on themselves'))
-        
-    // });
-
-    // it('(a => b, b => a),returns circular dependency error', () => {
-    //     expect(orderJobs('a => b, b => a')).to.throw(new Error('Jobs cannot have circular dependencies'))
-        
-    // });
+    it('(c => d, a => b, a => a),throws the error: "Jobs cannot depend on themselves"', () => {
+        assert.throws(() => orderJobs('c => d, a => b, a => a'), Error, "Jobs cannot depend on themselves");
+    });
+    it('(a => b, b => a),throws the error: "Jobs cannot have circular dependencies" ', () => {
+        assert.throws(() => orderJobs('a => b, b => a'), Error, "Jobs cannot have circular dependencies");
+    });
     // it('(a => b, c => d, d => a),returns string with b before a, d before c and a before d', () => {
         
     //     const indexA = orderJobs('a => b, c => d, d => a').indexOf('a')

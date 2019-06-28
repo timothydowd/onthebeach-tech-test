@@ -22,7 +22,6 @@ const orderJobs = (jobDependencies) => {
             const nonPriorityJob = jobDependency[0] // and similar for non prioity job
 
             if(priorityJob === nonPriorityJob){ // if jobs are the same i.e. self dependent
-                // return [...jobSequence, 'sdError'] // adds error into sequence to be picked up later when out of reduce
                 throw new Error('Jobs cannot depend on themselves')
 
             } else if(!jobSequence.includes(priorityJob) && !jobSequence.includes(nonPriorityJob)){ //if job sequence array that we are adding to 
@@ -40,19 +39,10 @@ const orderJobs = (jobDependencies) => {
                 const elementsAfterNonPriorityJob = [...jobSequence.slice(jobSequence.indexOf(nonPriorityJob))] // store jobs after and including priority job
                 return [...elementsUptoIncludingNonPriorityJob, priorityJob, ...elementsAfterNonPriorityJob] // put non priority job after priority job
             } else {
-                // return [...jobSequence, 'cdError']
                 throw new Error('Jobs cannot have circular dependencies')
             }
         }
     },[])
-
-    console.log(jobSequenceArray)
-
-    // if(jobSequenceArray.includes('sdError')){ // catches sdError or cdError message placed earlier in reduce
-    //     return 'Error: Jobs cannot depend on themselves'
-    // } else if(jobSequenceArray.includes('cdError')) {
-    //     return 'Error: Jobs cannot have circular dependencies'
-    // }
 
     console.log('jobSequenceArray: ', jobSequenceArray)
 
