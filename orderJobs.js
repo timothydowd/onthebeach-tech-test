@@ -45,13 +45,10 @@ const orderJobs = (jobDependencies) => {
                 return [...elementsUptoIncludingNonPriorityJob, priorityJob, ...elementsAfterNonPriorityJob] // put non priority job after priority job
                 
             } else if (jobSequence.includes(priorityJob) && jobSequence.includes(nonPriorityJob)){ // else  the jobSequence contains both the non priority and piority job already
-                // if(jobSequence.indexOf(priorityJob) < jobSequence.indexOf(nonPriorityJob)){ // if the priority job appears before the non priority job in the sequence
-                //     console.log('jobSequence: ', jobSequence)
-                //     return jobSequence  // return the sequence as both jobs are already accounted for and in correct order
-                // } else {
+                
                     console.log('before cd error: ', jobSequence)
-                    throw new Error('Jobs cannot have circular dependencies') // else there is a circular dependency issue
-                // }
+                    throw new Error('Jobs cannot have circular dependencies') //  there is a circular dependency issue
+               
                 
             }
         }
