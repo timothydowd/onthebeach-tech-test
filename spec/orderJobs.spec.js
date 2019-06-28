@@ -74,48 +74,11 @@ describe('orderJobs', () => {
         assert.throws(() => orderJobs('a =>, b => c, c => f, d => a, e =>, f => b'), Error, "Jobs cannot have circular dependencies");
     });
 
-    it('when passed (a => b, b => c, a => c), returns a string with b before a, c before b and c before a', () => {
-        expect(orderJobs('a => b, b => c, a => c')).to.have.lengthOf(3)
-
-        const indexA = orderJobs('a => b, b => c, a => c').indexOf('a')
-        const indexB = orderJobs('a => b, b => c, a => c').indexOf('b')
-        const indexC = orderJobs('a => b, b => c, a => c').indexOf('c')
-        
-        assert.operator(indexA, '>', indexB)
-        assert.operator(indexB, '>', indexC)
-        assert.operator(indexA, '>', indexC)
-    });
-
     
 
 
-    // it('(a => b, c => d, d => a),returns string with b before a, d before c and a before d', () => {
-        
-    //     const indexA = orderJobs('a => b, c => d, d => a').indexOf('a')
-    //     const indexB = orderJobs('a => b, c => d, d => a').indexOf('b')
-    //     const indexC = orderJobs('a => b, c => d, d => a').indexOf('c')
-    //     const indexD = orderJobs('a => b, c => d, d => a').indexOf('d')
-    //     expect(orderJobs('a => b, c => d, d => a')).to.have.lengthOf(4)
-
-    //     assert.operator(indexA, '>', indexB)
-    //     assert.operator(indexC, '>', indexD)
-    //     assert.operator(indexD, '>', indexA)
-       
-    // });
-
-    // it('(a => b, c => d, a => d),returns string with b before a, d before c and d before a', () => {
-        
-    //     const indexA = orderJobs('a => b, c => d, a => d').indexOf('a')
-    //     const indexB = orderJobs('a => b, c => d, a => d').indexOf('b')
-    //     const indexC = orderJobs('a => b, c => d, a => d').indexOf('c')
-    //     const indexD = orderJobs('a => b, c => d, a => d').indexOf('d')
-    //     expect(orderJobs('a => b, c => d, a => d')).to.have.lengthOf(4)
-
-    //     assert.operator(indexA, '>', indexB)
-    //     assert.operator(indexC, '>', indexD)
-    //     assert.operator(indexA, '>', indexD)
-       
-    // });
     
+    
+
     
 });

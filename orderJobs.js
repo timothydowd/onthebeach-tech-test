@@ -3,6 +3,8 @@ const orderJobs = (jobDependencies) => {
         return ''
     }
 
+    console.log('jobDependeices: ', jobDependencies)
+
     const formattedJobDependenciesArray = jobDependencies.split(',').map(jobDependency => {  // splits jobDependencies into an array then maps
         return jobDependency.replace(/(=>|\s)/g, '')  // regex to remove any => and whitespace
     })
@@ -26,24 +28,30 @@ const orderJobs = (jobDependencies) => {
 
             } else if(!jobSequence.includes(priorityJob) && !jobSequence.includes(nonPriorityJob)){ //if job sequence array that we are adding to 
                 // doesn't contain the priority or non priority job
-                return [priorityJob, nonPriorityJob, ...jobSequence]  // adds job pair to front of array
+                console.log('jobSequence: ', [priorityJob, nonPriorityJob, ...jobSequence])
+                return [...jobSequence, priorityJob, nonPriorityJob]  // adds job pair to front of array
             } else if(jobSequence.includes(priorityJob) && !jobSequence.includes(nonPriorityJob)) { // if job sequence contains the priority job only
                 
                 const elementsUptoIncludingPriorityJob = [...jobSequence.slice(0, jobSequence.indexOf(priorityJob) + 1)] // store jobs upto and including priority job
                 const elementsAfterPriorityJob = [...jobSequence.slice(jobSequence.indexOf(priorityJob) + 1)] // store jobs after priority job
+                console.log('jobSequence: ',[...elementsUptoIncludingPriorityJob, nonPriorityJob, ...elementsAfterPriorityJob])
                 return [...elementsUptoIncludingPriorityJob, nonPriorityJob, ...elementsAfterPriorityJob] // put non priority job after priority job
 
             } else if(jobSequence.includes(nonPriorityJob) && !jobSequence.includes(priorityJob)) { // if job sequence contains the non priority job only
                 
                 const elementsUptoIncludingNonPriorityJob = [...jobSequence.slice(0, jobSequence.indexOf(nonPriorityJob))] // store jobs upto nonPriority job
                 const elementsAfterNonPriorityJob = [...jobSequence.slice(jobSequence.indexOf(nonPriorityJob))] // store jobs after and including priority job
+                console.log('jobSequence: ', [...elementsUptoIncludingNonPriorityJob, priorityJob, ...elementsAfterNonPriorityJob])
                 return [...elementsUptoIncludingNonPriorityJob, priorityJob, ...elementsAfterNonPriorityJob] // put non priority job after priority job
+                
             } else if (jobSequence.includes(priorityJob) && jobSequence.includes(nonPriorityJob)){ // else  the jobSequence contains both the non priority and piority job already
-                if(jobSequence.indexOf(priorityJob) < jobSequence.indexOf(nonPriorityJob)){ // if the priority job appears before the non priority job in the sequence
-                    return jobSequence  // return the sequence as both jobs are already accounted for and in correct order
-                } else {
+                // if(jobSequence.indexOf(priorityJob) < jobSequence.indexOf(nonPriorityJob)){ // if the priority job appears before the non priority job in the sequence
+                //     console.log('jobSequence: ', jobSequence)
+                //     return jobSequence  // return the sequence as both jobs are already accounted for and in correct order
+                // } else {
+                    console.log('before cd error: ', jobSequence)
                     throw new Error('Jobs cannot have circular dependencies') // else there is a circular dependency issue
-                }
+                // }
                 
             }
         }
