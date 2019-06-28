@@ -74,5 +74,12 @@ describe('orderJobs', () => {
         assert.throws(() => orderJobs('a =>, b => c, c => f, d => a, e =>, f => b'), Error, "Jobs cannot have circular dependencies");
     });
 
+  
+
+
+    
+
+    
+
     
 });
