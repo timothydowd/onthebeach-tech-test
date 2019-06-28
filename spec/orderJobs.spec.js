@@ -57,9 +57,45 @@ describe('orderJobs', () => {
         assert.operator(indexA, '<', indexD)
         assert.operator(indexB, '<', indexE)
     });
-    it('(a => a),returns self dependency error', () => {
-        expect(orderJobs('a => a')).to.eql('Error: Jobs cannot depend on themselves')
-
+    it.only('(a => a), throws the error: "Jobs cannot depend on themselves"', () => {
+        assert.throws(() => orderJobs('a => a'), Error, "Jobs cannot depend on themselves");
     });
+    // it('(c => d, a => b, a => a),returns self dependency error', () => {
+    //     expect(orderJobs('c => d, a => b, a => a')).to.throw(new Error('Jobs cannot depend on themselves'))
+        
+    // });
 
+    // it('(a => b, b => a),returns circular dependency error', () => {
+    //     expect(orderJobs('a => b, b => a')).to.throw(new Error('Jobs cannot have circular dependencies'))
+        
+    // });
+    // it('(a => b, c => d, d => a),returns string with b before a, d before c and a before d', () => {
+        
+    //     const indexA = orderJobs('a => b, c => d, d => a').indexOf('a')
+    //     const indexB = orderJobs('a => b, c => d, d => a').indexOf('b')
+    //     const indexC = orderJobs('a => b, c => d, d => a').indexOf('c')
+    //     const indexD = orderJobs('a => b, c => d, d => a').indexOf('d')
+    //     expect(orderJobs('a => b, c => d, d => a')).to.have.lengthOf(4)
+
+    //     assert.operator(indexA, '>', indexB)
+    //     assert.operator(indexC, '>', indexD)
+    //     assert.operator(indexD, '>', indexA)
+       
+    // });
+
+    // it('(a => b, c => d, a => d),returns string with b before a, d before c and d before a', () => {
+        
+    //     const indexA = orderJobs('a => b, c => d, a => d').indexOf('a')
+    //     const indexB = orderJobs('a => b, c => d, a => d').indexOf('b')
+    //     const indexC = orderJobs('a => b, c => d, a => d').indexOf('c')
+    //     const indexD = orderJobs('a => b, c => d, a => d').indexOf('d')
+    //     expect(orderJobs('a => b, c => d, a => d')).to.have.lengthOf(4)
+
+    //     assert.operator(indexA, '>', indexB)
+    //     assert.operator(indexC, '>', indexD)
+    //     assert.operator(indexA, '>', indexD)
+       
+    // });
+    
+    
 });
