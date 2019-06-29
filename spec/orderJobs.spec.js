@@ -117,6 +117,74 @@ describe('orderJobs - testing for jobs with muliple dependencies', () => {
         assert.operator(indexA, '>', indexC)
         assert.operator(indexC, '>', indexB)
     });
+    it('(c => b, a => b, a => c), returns a string with  b before a, c before a and b before c', () => {
+        expect(orderJobs('c => b, a => b, a => c')).to.have.lengthOf(3)
+        const indexA = orderJobs('c => b, a => b, a => c').indexOf('a')
+        const indexB = orderJobs('c => b, a => b, a => c').indexOf('b')
+        const indexC = orderJobs('c => b, a => b, a => c').indexOf('c')
+        assert.operator(indexA, '>', indexB)
+        assert.operator(indexA, '>', indexC)
+        assert.operator(indexC, '>', indexB)
+    });
+
+    it('(a => c, c => b, a => b), returns a string with  b before a, c before a and b before c', () => {
+        expect(orderJobs('a => c, c => b, a => b')).to.have.lengthOf(3)
+        const indexA = orderJobs('a => c, c => b, a => b').indexOf('a')
+        const indexB = orderJobs('a => c, c => b, a => b').indexOf('b')
+        const indexC = orderJobs('a => c, c => b, a => b').indexOf('c')
+        assert.operator(indexA, '>', indexB)
+        assert.operator(indexA, '>', indexC)
+        assert.operator(indexC, '>', indexB)
+    });
+    it('(c => b, a => c, a => b), returns a string with  b before a, c before a and b before c', () => {
+        expect(orderJobs('c => b, a => c, a => b')).to.have.lengthOf(3)
+        const indexA = orderJobs('c => b, a => c, a => b').indexOf('a')
+        const indexB = orderJobs('c => b, a => c, a => b').indexOf('b')
+        const indexC = orderJobs('c => b, a => c, a => b').indexOf('c')
+        assert.operator(indexA, '>', indexB)
+        assert.operator(indexA, '>', indexC)
+        assert.operator(indexC, '>', indexB)
+    });
+
+    it('("a => b, c => b, a => d"), returns string with b before a, b before c, d before a', () => {
+        expect(orderJobs('a => b, c => b, a => d')).to.have.lengthOf(4)
+        const indexA = orderJobs('a => b, c => b, a => d').indexOf('a')
+        const indexB = orderJobs('a => b, c => b, a => d').indexOf('b')
+        const indexC = orderJobs('a => b, c => b, a => d').indexOf('c')
+        const indexD = orderJobs('a => b, c => b, a => d').indexOf('d')
+        assert.operator(indexA, '>', indexB)
+        assert.operator(indexC, '>', indexB)
+        assert.operator(indexA, '>', indexD)
+    });
+
+    it('("a => b, c => d, a => d"), returns string with b before a, b before c, d before a', () => {
+        expect(orderJobs('a => b, c => d, a => d')).to.have.lengthOf(4)
+        const indexA = orderJobs('a => b, c => d, a => d').indexOf('a')
+        const indexB = orderJobs('a => b, c => d, a => d').indexOf('b')
+        const indexC = orderJobs('a => b, c => d, a => d').indexOf('c')
+        const indexD = orderJobs('a => b, c => d, a => d').indexOf('d')
+        assert.operator(indexA, '>', indexB)
+        assert.operator(indexC, '>', indexD)
+        assert.operator(indexA, '>', indexD)
+    });
+
+    it('(a =>, e => b, c => f, d => a, b => c, f =>),returns string with c before b, f before c, a before d and b before e', () => {
+        expect(orderJobs('a =>, e => b, c => f, d => a, b => c, f =>')).to.have.lengthOf(6)
+
+        const indexA = orderJobs('a =>, e => b, c => f, d => a, b => c, f =>').indexOf('a')
+        const indexB = orderJobs('a =>, e => b, c => f, d => a, b => c, f =>').indexOf('b')
+        const indexC = orderJobs('a =>, e => b, c => f, d => a, b => c, f =>').indexOf('c')
+        const indexD = orderJobs('a =>, e => b, c => f, d => a, b => c, f =>').indexOf('d')
+        const indexE = orderJobs('a =>, e => b, c => f, d => a, b => c, f =>').indexOf('e')
+        const indexF = orderJobs('a =>, e => b, c => f, d => a, b => c, f =>').indexOf('f')
+        
+        assert.operator(indexB, '<', indexE)
+        assert.operator(indexF, '<', indexC)
+        assert.operator(indexA, '<', indexD)
+        assert.operator(indexC, '<', indexB)
+    });
+
+    
 
 
 });
