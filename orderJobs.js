@@ -3,7 +3,7 @@ const orderJobs = (jobDependencies) => {
         return ''
     }
 
-    console.log('jobDependeices: ', jobDependencies)
+    console.log('jobDependencies: ', jobDependencies)
 
     const formattedJobDependenciesArray = jobDependencies.split(',').map(jobDependency => {  // splits jobDependencies into an array then maps
         return jobDependency.replace(/(=>|\s)/g, '')  // regex to remove any => and whitespace

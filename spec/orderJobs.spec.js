@@ -31,6 +31,14 @@ describe('orderJobs', () => {
         assert.operator(indexA, '>', indexB)
         assert.operator(indexC, '>', indexB)
     });
+    it('(c => b, a => b), returns b before a and b before c', () => {
+        expect(orderJobs('c => b, a => b')).to.have.lengthOf(3)
+        const indexA = orderJobs('c => b, a => b').indexOf('a')
+        const indexB = orderJobs('c => b, a => b').indexOf('b')
+        const indexC = orderJobs('c => b, a => b').indexOf('c')
+        assert.operator(indexA, '>', indexB)
+        assert.operator(indexC, '>', indexB)
+    });
     it('("a => b, c => b, a => d"), returns string with b before a, b before c, d before a', () => {
         expect(orderJobs('a => b, c => b, a => d')).to.have.lengthOf(4)
         const indexA = orderJobs('a => b, c => b, a => d').indexOf('a')
