@@ -98,4 +98,15 @@ describe('orderJobs - testing for jobs with muliple dependencies', () => {
         assert.operator(indexA, '>', indexC)
         assert.operator(indexC, '>', indexB)
     });
+    it('(a => b, c => b, a => c), returns a string with  b before a, c before a and b before c', () => {
+        expect(orderJobs('a => b, c => b, a => c')).to.have.lengthOf(3)
+        const indexA = orderJobs('a => b, c => b, a => c').indexOf('a')
+        const indexB = orderJobs('a => b, c => b, a => c').indexOf('b')
+        const indexC = orderJobs('a => b, c => b, a => c').indexOf('c')
+        assert.operator(indexA, '>', indexB)
+        assert.operator(indexA, '>', indexC)
+        assert.operator(indexC, '>', indexB)
+    });
+
+
 });
