@@ -2,7 +2,7 @@ const chai = require('chai')
 const { expect, assert } = chai
 const { orderJobs } = require('../orderJobs')
 
-describe('orderJobs', () => {
+describe('orderJobs standard tests', () => {
     it('when passed an empty string returns an empty string', () => {
         expect(orderJobs('')).to.eql('') 
     });
@@ -39,6 +39,9 @@ describe('orderJobs', () => {
         assert.operator(indexA, '>', indexB)
         assert.operator(indexC, '>', indexB)
     });
+    
+
+
     it('("a => b, c => b, a => d"), returns string with b before a, b before c, d before a', () => {
         expect(orderJobs('a => b, c => b, a => d')).to.have.lengthOf(4)
         const indexA = orderJobs('a => b, c => b, a => d').indexOf('a')
@@ -50,7 +53,7 @@ describe('orderJobs', () => {
         assert.operator(indexA, '>', indexD)
     });
    
-    it('(a =>, b => c, c => f, d => a, e => b),returns string with c before b, f before c, a before d and b before e', () => {
+    it('(a =>, b => c, c => f, d => a, e => b, f=>),returns string with c before b, f before c, a before d and b before e', () => {
         expect(orderJobs('a =>, b => c, c => f, d => a, e => b, f =>')).to.have.lengthOf(6)
 
         const indexA = orderJobs('a =>, b => c, c => f, d => a, e => b, f =>').indexOf('a')
@@ -82,12 +85,17 @@ describe('orderJobs', () => {
         assert.throws(() => orderJobs('a =>, b => c, c => f, d => a, e =>, f => b'), Error, "Jobs cannot have circular dependencies");
     });
 
-  
 
+});
 
-    
-
-    
-
-    
+describe('orderJobs - testing for jobs with muliple dependencies', () => {
+    it('(a => b, a => c, c => b), returns a string with  b before a, c before a and b before c', () => {
+        expect(orderJobs('a => b, a => c, c => b')).to.have.lengthOf(3)
+        const indexA = orderJobs('a => b, a => c, c => b').indexOf('a')
+        const indexB = orderJobs('a => b, a => c, c => b').indexOf('b')
+        const indexC = orderJobs('a => b, a => c, c => b').indexOf('c')
+        assert.operator(indexA, '>', indexB)
+        assert.operator(indexA, '>', indexC)
+        assert.operator(indexC, '>', indexB)
+    });
 });

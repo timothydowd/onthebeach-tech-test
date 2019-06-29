@@ -3,7 +3,7 @@ const orderJobs = (jobDependencies) => {
         return ''
     }
 
-    console.log('jobDependencies: ', jobDependencies)
+    console.log('jobDependeices: ', jobDependencies)
 
     const formattedJobDependenciesArray = jobDependencies.split(',').map(jobDependency => {  // splits jobDependencies into an array then maps
         return jobDependency.replace(/(=>|\s)/g, '')  // regex to remove any => and whitespace
@@ -46,9 +46,15 @@ const orderJobs = (jobDependencies) => {
                 
             } else if (jobSequence.includes(priorityJob) && jobSequence.includes(nonPriorityJob)){ // else  the jobSequence contains both the non priority and piority job already
                 
+                   if(jobSequence.indexOf(priorityJob) < jobSequence.indexOf(nonPriorityJob)){ // if the priority job appears before the non priority job in the sequence
+                    console.log('jobSequence: ', jobSequence)
+                    return jobSequence  // return the sequence as both jobs are already accounted for and in correct order
+                } else {
+
                     console.log('before cd error: ', jobSequence)
-                    throw new Error('Jobs cannot have circular dependencies') //  there is a circular dependency issue
-               
+                    throw new Error('Jobs cannot have circular dependencies') // else there is a circular dependency issue
+                }
+                   
                 
             }
         }
