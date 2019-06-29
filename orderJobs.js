@@ -7,7 +7,7 @@ const orderJobs = (jobDependencies) => {
 
     const formattedJobDependenciesArray = jobDependencies.split(',').map(jobDependency => {  // splits jobDependencies into an array then maps
         return jobDependency.replace(/(=>|\s)/g, '')  // regex to remove any => and whitespace
-    })
+    }).sort()
     console.log('formattedJobDependenciesArray: ', formattedJobDependenciesArray)
 
     const nonPriorityJobs = formattedJobDependenciesArray.reduce((nonPriorityJobs, jobDependency) => { // creates array of jobs that have no dependencies
