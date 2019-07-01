@@ -4,12 +4,14 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./spec/*.spec.js"
+    "test": "mocha ./spec/*.spec.js",
+    "lint": "eslint"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "chai": "^4.2.0",
+    "eslint": "^6.0.1",
     "mocha": "^6.1.4"
   }
 }
