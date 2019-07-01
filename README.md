@@ -5,7 +5,7 @@ This program is written in JS
 My approach to this exercise was first to split the jobs into dependent job pairs and non dependent jobs.   
 First I dealt with the dependent job pairs iteratively:  
 - If neither jobs existed in the ordered job sequence that was being added to, both jobs would be added to the job sequence array  
-- If one of the jobs in the pair existed in the ordered job sequence then the job that didnt exist would be added before or after in the sequence, depending on whether it was the dependent or non dependent job (priority/nonpriority job)  
+- If one of the jobs in the pair existed in the ordered job sequence then the job that didnt exist would be added before or after in the sequence, depending on whether it was the dependent or non dependent job (non priority/priority job)  
 - If both jobs were already allocated in the ordered job sequence then it would check that the nonprioritised job(dependent job), appeared after the priotitised job (non dependent job) in the sequence - if that wasn't the case then we would know there was a circular dependency issue.  
 
 Finally the non dependant jobs would be added to the job dequence array if they were not already allocated for.    
